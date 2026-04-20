@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Person Class Hierarchy</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      background: linear-gradient(180deg, #f4f8fc, #eef2f6);
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .card {
+      background: #ffffff;
+      padding: 18px 20px;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      margin-bottom: 16px;
+      border: 1px solid #e3e8ef;
+    }
+
+    .name {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .age {
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .intro {
+      font-style: italic;
+      color: #555;
+      margin-bottom: 6px;
+    }
+
+    .extra {
+      font-size: 15px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Person Class Hierarchy</h1>
+
+    <div id="cards"></div>
+  </div>
+
+<script>
+  // Base class
+  class Person {
+    constructor(name, age) {
+      this.name = name;
+      this.age = age;
+    }
+
+    introduce() {
+      return `Hello, my name is ${this.name}.`;
+    }
+  }
+
+  // Student class extends Person
+  class Student extends Person {
+    constructor(name, age, major) {
+      super(name, age);
+      this.major = major;
+    }
+
+    introduce() {
+      return `Hello, my name is ${this.name} and I'm studying ${this.major}.`;
+    }
+  }
+
+  // Teacher class extends Person
+  class Teacher extends Person {
+    constructor(name, age, subject) {
+      super(name, age);
+      this.subject = subject;
+    }
+
+    introduce() {
+      return `Hello, my name is ${this.name} and I teach ${this.subject}.`;
+    }
+  }
+
+  const people = [
+    new Person("Alex Johnson", 30),
+    new Student("Emma Watson", 20, "Computer Science"),
+    new Teacher("Dr. James Wilson", 45, "Mathematics")
+  ];
+
+  const container = document.getElementById("cards");
+
+  people.forEach(person => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    let extraInfo = "";
+    let role = "Person";
+
+    if (person instanceof Student) {
+      role = "Student";
+      extraInfo = `<div class=\"extra\">Major: ${person.major}</div>`;
+    }
+
+    if (person instanceof Teacher) {
+      role = "Teacher";
+      extraInfo = `<div class=\"extra\">Teaching: ${person.subject}</div>`;
+    }
+
+    card.innerHTML = `
+      <div class="name">${person.name} (${role})</div>
+      <div class="age">Age: ${person.age}</div>
+      <div class="intro">${person.introduce()}</div>
+      ${extraInfo}
+    `;
+
+    container.appendChild(card);
+  });
+</script>
+
+</body>
+</html>
